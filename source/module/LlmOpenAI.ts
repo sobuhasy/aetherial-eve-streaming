@@ -12,7 +12,7 @@ export class LlmOpenAI implements Module {
 
     // The Awakening (init)
     public async init(): Promise<void> {
-        const apiKey = process.env.OPENAI_API_KEY;
+        const apiKey = process.env['OPENAI_API_KEY'];
 
         if (!apiKey) {
             console.error("CRITICAL: OPENAI_API_KEY is missing from the .env vault!");

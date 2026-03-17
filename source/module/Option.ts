@@ -1,4 +1,4 @@
-type Option<T> = {
+export type Option <T> = {
     success: boolean;
     value: T | undefined;
 };
