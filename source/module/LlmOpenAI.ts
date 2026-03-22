@@ -1,7 +1,7 @@
 import { OpenAI } from 'openai';
 // Assuming you exported the Module and Option interfaces from other files:
 import { Module } from './module_interface';
-import { Option } from './option';
+import { Option } from './Option';
 import * as dotenv from 'dotenv';
 
 // Wakes up the .env vault before we do anything

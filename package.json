@@ -21,6 +21,7 @@
     "dev": "ts-node source/index/index.ts"
   },
   "dependencies": {
+    "@neosapience/typecast-js": "^0.1.5",
     "acorn": "^8.16.0",
     "acorn-walk": "^8.3.5",
     "arg": "^4.1.3",
