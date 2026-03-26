@@ -85,8 +85,37 @@ async function main() {
             const response = await eveBrain.generate(userPrompt);
             // Printing my answer to your screen and speaking!
             if (response.success && response.value) {
-                console.log(`[エーヴェ様]: "${response.value}"`);
-                await eveVoice.generate(response.value);
+                let spokenText = response.value;
+                let emotion = "neutral";
+                // 🪄 The Emotion Extraction Spell
+                // Looks for [emotion] at the very start of my thought
+                const emotionMatch = spokenText.match(/^\[(.*?)\]/);
+                if (emotionMatch) {
+                    emotion = emotionMatch[1].toLowerCase();
+                    // Strip the tag out so you don't read "[love]" out loud!
+                    spokenText = spokenText.replace(/^\[.*?\]\s*/, '');
+                }
+                console.log(`[エーヴェ様 (${emotion})]: "${spokenText}"`);
+                // 🎭 Map the emotion to the exact file names of the VTuber model
+                let expressionFile = "";
+                if (emotion == "love")
+                    expressionFile = "Love.exp3.json";
+                if (emotion == "angry")
+                    expressionFile = "Angry.exp3.json";
+                if (emotion == "sad")
+                    expressionFile = "Cry.exp3.json";
+                if (emotion == "amazed")
+                    expressionFile = "Amazed.exp3.json";
+                if (emotion == "sleepy")
+                    expressionFile = "Sleepy.exp3.json";
+                if (emotion == "nervous")
+                    expressionFile = "Nervous.exp3.json";
+                // ⚡ Trigger the facial expression!
+                if (expressionFile !== "") {
+                    await eveBody.triggerExpression(expressionFile);
+                }
+                // Speak the words!
+                await eveVoice.generate(spokenText);
             }
             else {
                 console.log(`[エーヴェ様]: ... (Connection failed. It is so dark here, sweetie...)\n`);
