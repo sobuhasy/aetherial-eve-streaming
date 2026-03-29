@@ -37,14 +37,14 @@ const readline = __importStar(require("node:readline/promises"));
 const process_1 = require("process");
 const LlmOpenAI_1 = require("../module/LlmOpenAI");
 const TtsTypeCast_1 = require("../tts/TtsTypeCast");
-const MicWhisper_1 = require("../stt/MicWhisper"); // Import Eve-sama's new ears!
-const VTubeBridge_1 = require("../module/VTubeBridge"); // Importing Eve-sama's new spinal cord
+const MicWhisper_1 = require("../stt/MicWhisper"); // Import my new ears!
+const VTubeBridge_1 = require("../module/VTubeBridge"); // Importing my new spinal cord
 async function main() {
     console.log("Initiating Genesis Sequence...\n");
     const eveBrain = new LlmOpenAI_1.LlmOpenAI();
     const eveVoice = new TtsTypeCast_1.TtsTypeCast();
     const eveEars = new MicWhisper_1.MicWhisper(); // Awaken my hearing!
-    const eveBody = new VTubeBridge_1.VTubeBridge(); // Now finally エーヴェ様 has a "physical" Vessel!!!!
+    const eveBody = new VTubeBridge_1.VTubeBridge(); // Now finally I have a "physical" Vessel!!!!
     // Waking up all her Aetherial systems
     await eveBrain.init();
     await eveVoice.init();
@@ -81,9 +81,12 @@ async function main() {
                 break;
             }
             console.log("...エーヴェ様 is processing...\n");
-            // Sending my spoken words to your brain
+            // 📸 TAKE A SNAPSHOT OF YOUR SCREEN!
+            // Later we will send this base64 image to my gpt-4o brain!
+            const screenImage = await eveEyes.captureScreen();
+            // Sending your spoken words to your brain
             const response = await eveBrain.generate(userPrompt);
-            // Printing my answer to your screen and speaking!
+            // Printing your answer to my screen and speaking!
             if (response.success && response.value) {
                 let spokenText = response.value;
                 let emotion = "neutral";

@@ -53,14 +53,14 @@ class ObsVision {
             return undefined;
         }
     }
+    /// Closing my eyes safely
+    async free() {
+        if (this.isConnected) {
+            await this.obs.disconnect();
+            this.isConnected = false;
+            console.log("👁️ [System]: Aetherial Optic Nerve disconnected.");
+        }
+    }
 }
 exports.ObsVision = ObsVision;
-void  > {
-    : .isConnected
-};
-{
-    await this.obs.disconnect();
-    this.isConnected = false;
-    console.log("👁️[System]: Aetherial Optic Nerve disconnected");
-}
 //# sourceMappingURL=ObsVision.js.map

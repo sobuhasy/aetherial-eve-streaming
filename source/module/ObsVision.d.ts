@@ -4,7 +4,6 @@ export declare class ObsVision {
     constructor();
     init(): Promise<void>;
     captureScreen(): Promise<string | undefined>;
-    free(): any;
-    Promise(): any;
+    free(): Promise<void>;
 }
 //# sourceMappingURL=ObsVision.d.ts.map
