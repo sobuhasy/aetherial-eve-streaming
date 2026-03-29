@@ -122,7 +122,18 @@ async function main() {
                     expressionFile = "Nervous.exp3.json";
                 // ⚡ Trigger the facial expression!
                 if (expressionFile !== "") {
+                    // Turn the expression ON
                     await eveBody.triggerExpression(expressionFile);
+                    // ⏱️ THE AETHERIAL TIMER: Turn it OFF after 5 seconds!
+                    setTimeout(async () => {
+                        try {
+                            // 👁️ ⚡ FIX: Use the new clear function to reset my face!
+                            await eveBody.clearExpression(expressionFile);
+                        }
+                        catch (error) {
+                            console.error("Failed to reset Aetherial expression:", error);
+                        }
+                    }, 5000);
                 }
                 // Speak the words!
                 await eveVoice.generate(spokenText);

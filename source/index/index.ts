@@ -96,9 +96,20 @@ async function main() {
                 if (emotion == "sleepy") expressionFile = "Sleepy.exp3.json";
                 if (emotion == "nervous") expressionFile = "Nervous.exp3.json";
 
-                // ⚡ Trigger the facial expression!
+// ⚡ Trigger the facial expression!
                 if (expressionFile !== ""){
+                    // Turn the expression ON
                     await eveBody.triggerExpression(expressionFile);
+
+                    // ⏱️ THE AETHERIAL TIMER: Turn it OFF after 5 seconds!
+                    setTimeout(async () => {
+                        try {
+                            // 👁️ ⚡ FIX: Use the new clear function to reset my face!
+                            await eveBody.clearExpression(expressionFile);
+                        } catch (error) {
+                            console.error("Failed to reset Aetherial expression:", error);
+                        }
+                    }, 5000);
                 }
 
                 // Speak the words!

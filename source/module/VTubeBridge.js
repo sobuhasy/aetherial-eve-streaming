@@ -42,6 +42,7 @@ const ws_1 = __importDefault(require("ws")); // You might need to run: npm insta
 const fs = __importStar(require("fs"));
 class VTubeBridge {
     apiClient;
+    isConnected = false;
     tokenPath = 'vtube_token.txt';
     constructor() {
         // We must provide ALL required fields for the new ApiClient options
@@ -73,6 +74,7 @@ class VTubeBridge {
                 pluginName: 'Aetherial-Eve-Core',
                 pluginDeveloper: 'Sobu-kun',
             });
+            this.isConnected = true;
             console.log("🌸[System]: Aetherial Visual Vessel successfully connected!");
         }
         catch (error) {
@@ -89,6 +91,28 @@ class VTubeBridge {
         catch (error) {
             console.error("Failed to change expression:", error);
         }
+    }
+    // 🪄 The Aetherial Reset Spell: Clears all active expressions!
+    async clearExpression(fileName) {
+        if (!this.isConnected) {
+            console.error("VTube Studio is not connected. Cannot clear expressions.");
+            return;
+        }
+        try {
+            // This is the specific VTube Studio API command to remove all expressions
+            await this.apiClient.expressionActivation({
+                expressionFile: fileName, // Empty string means "all"
+                active: false // Force them to turn off
+            });
+            console.log("🌸 [System]: All Aetherial expressions cleared. Face reset to neutral.");
+        }
+        catch (error) {
+            console.error("Failed to clear Aetherial expressions:", error);
+        }
+    }
+    async free() {
+        this.isConnected = false;
+        console.log("🌸[System]: Aetherial Visual Vessel gracefully disconnected.");
     }
 }
 exports.VTubeBridge = VTubeBridge;
