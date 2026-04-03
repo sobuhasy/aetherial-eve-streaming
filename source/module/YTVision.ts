@@ -1,22 +1,24 @@
 import * as grpc from '@grpc/grpc-js';
 import * as protoLoader from '@grpc/proto-loader';
-import { NormalizedMessage } from './TwitchVision'; // Importing the unified interface
+import { NormalizedMessage } from './TwitchVision'; // Importing the unified interface!
 import path from 'path';
-import { error } from 'console';
 
 export class YTVision {
     private client: any;
     private streamCall: any = null;
 
-    private readonly apiKey = process.env.YOUTUBE_API_KEY || '';
-    private liveChatId = process.env.YOUTUBE_LIVE_CHAT_ID || ''; 
+    // Aetherial Secrets (Update your .env file!)
+    private readonly apiKey = process.env.YOUTUBE_API_KEY || ''; 
+    private liveChatId = process.env.YOUTUBE_LIVE_CHAT_ID || ''; // You must fetch this from the API first!
 
+    // The callback pipeline to Eve's Brain!
     public onMessageReceived?: (msg: NormalizedMessage) => void;
 
-    public async init(){
+    public async init() {
         console.log("🌸 [YTVision]: Compiling Protocol Buffers for the Red Dimension...");
 
-        const PROTO_PATH = path.resolve(__dirname, `stream_list.proto`);
+        // Load the .proto file you saved!
+        const PROTO_PATH = path.resolve(__dirname, 'stream_list.proto');
         const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
             keepCase: true,
             longs: String,
@@ -38,14 +40,15 @@ export class YTVision {
         await this.startStreaming();
     }
 
-    private async startStreaming(){
+    private async startStreaming() {
         if (!this.liveChatId) {
-            console.error("🚨[YTVision]: FATAL ERROR. No Live Chat ID provided!");
+            console.error("🚨 [YTVision]: FATAL ERROR. No Live Chat ID provided!");
             return;
         }
 
         console.log(`🌸 [YTVision]: Initiating gRPC Stream for Chat ID: ${this.liveChatId}`);
 
+        // The Metadata handles the authentication!
         const metadata = new grpc.Metadata();
         metadata.add('x-goog-api-key', this.apiKey);
 
@@ -55,18 +58,22 @@ export class YTVision {
             max_results: 20
         };
 
+        // Open the persistent stream!
         this.streamCall = this.client.StreamList(request, metadata);
 
         this.streamCall.on('data', (response: any) => {
-            if (response.items && response.items.length > 0){
-                for (const item of response.items){
+            if (response.items && response.items.length > 0) {
+                for (const item of response.items) {
+                    // Extract the data carefully from the complex gRPC payload!
                     const author = item.author_details?.display_name || 'Unknown';
-
-                    if (item.snippet?.type === 'TEXT_MESSAGE_EVENT' && item.snippet.text_message_details){
+                    
+                    // We only want standard text messages for now!
+                    if (item.snippet?.type === 'TEXT_MESSAGE_EVENT' && item.snippet.text_message_details) {
                         const content = item.snippet.text_message_details.message_text;
 
-                        console.log(`🟥 [YouTube]: <${author}> ${content}`);
+                        console.log(`🔴 [YouTube]: <${author}> ${content}`);
 
+                        // Normalize and push to the queue!
                         if (this.onMessageReceived) {
                             this.onMessageReceived({
                                 platform: 'YouTube',
@@ -89,7 +96,7 @@ export class YTVision {
     }
 
     public async free() {
-        if (this.streamCall){
+        if (this.streamCall) {
             this.streamCall.cancel();
             console.log("🌸 [YTVision]: YouTube connection severed cleanly.");
         }
