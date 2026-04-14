@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aetherial Eve Web Console</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <main class="app">
+    <header>
+      <h1>Aetherial Eve</h1>
+      <p>Web chat + multistream control for Twitch, YouTube, and TikTok.</p>
+    </header>
+
+    <section class="stage">
+      <div class="stage-card vtube">
+        <h2>エーヴェ様 (VTube Studio)</h2>
+        <p>Use VTube Studio as your live avatar source in OBS/stream input.</p>
+      </div>
+      <div class="stage-card sobu">
+        <h2>Sobu-kun Overlay</h2>
+        <img id="sobu-preview" alt="Sobu-kun PNG preview" />
+        <input id="sobu-png-url" type="url" placeholder="https://.../sobu.png" />
+      </div>
+    </section>
+
+    <section id="chat" class="chat" aria-live="polite"></section>
+
+    <form id="chat-form" class="composer">
+      <label for="image-upload" class="upload-btn" title="Upload image">
+        <i class="fa-solid fa-image"></i>
+      </label>
+      <button id="mic-button" class="mic-btn" type="button" title="Start microphone input" aria-pressed="false">
+        <i class="fa-solid fa-microphone"></i>
+      </button>
+      <input type="file" id="image-upload" accept="image/*" class="sr-only">
+
+      <label for="prompt" class="sr-only">Your message</label>
+      <textarea id="prompt" name="prompt" placeholder="Type a message for Eve... (Enter to send, Shift+Enter for newline)" rows="3" required></textarea>
+      <button id="send-button" type="submit">Send</button>
+    </form>
+    <div id="image-preview-container" class="hidden">
+      <img id="image-preview" src="" alt="Image Preview">
+      <button id="remove-image" type="button"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <section class="multistream-panel">
+      <h2>Multistream Control</h2>
+      <div class="input-grid">
+        <input id="input-url" type="text" placeholder="Input URL (OBS output / RTMP / SRT / media file)">
+        <input id="youtube-url" type="text" placeholder="YouTube RTMP URL">
+        <input id="youtube-key" type="password" placeholder="YouTube Stream Key">
+        <input id="twitch-url" type="text" placeholder="Twitch RTMP URL">
+        <input id="twitch-key" type="password" placeholder="Twitch Stream Key">
+        <input id="tiktok-url" type="text" placeholder="TikTok RTMP URL">
+        <input id="tiktok-key" type="password" placeholder="TikTok Stream Key">
+      </div>
+      <div class="multi-buttons">
+        <button id="start-multistream" type="button">Start Multistream</button>
+        <button id="stop-multistream" type="button" class="danger">Stop</button>
+      </div>
+      <p id="multistream-status">Multistream idle.</p>
+    </section>
+  </main>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>
