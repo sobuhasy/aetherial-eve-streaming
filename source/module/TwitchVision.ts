@@ -2,7 +2,7 @@ import WebSocket from 'ws';
 
 // This is the unified interface we discussed! Both Twitch and YouTube will output this!
 export interface NormalizedMessage {
-    platform: 'Twitch' | 'YouTube';
+    platform: 'Twitch' | 'YouTube' | 'TikTok';
     author: string;
     content: string;
 }
